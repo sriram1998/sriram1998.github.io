@@ -114,7 +114,7 @@ button
 <button id="button2" onclick ="Restart()">RESTART</button>
 <p id="p5"></p>
 <script>
-var score=0,x1,x2,x3,s;
+var score=0,s1,s2,s3,s;
 document.getElementById("button1").disabled=true;
 function Restart()
 {
@@ -135,24 +135,24 @@ function Start()
   s=setInterval(run,75);
 }
 function run(){
- x1 = Math.floor((Math.random() * 3) + 1);
- x2 = Math.floor((Math.random() * 3) + 1);
- x3 = Math.floor((Math.random() * 3) + 1);
- if(x1==1)
+ s1 = Math.floor((Math.random() * 3) + 1);
+ s2 = Math.floor((Math.random() * 3) + 1);
+ s3 = Math.floor((Math.random() * 3) + 1);
+ if(s1==1)
  document.getElementById("p4").src="slot1.png";
- else if(x1==2)
+ else if(s1==2)
  document.getElementById("p4").src="slot2.png";
  else
  document.getElementById("p4").src="slot3.png";
- if(x2==1)
+ if(s2==1)
  document.getElementById("p3").src="slot1.png";
- else if(x2==2)
+ else if(s2==2)
  document.getElementById("p3").src="slot2.png";
  else
  document.getElementById("p3").src="slot3.png";
- if(x3==1)
+ if(s3==1)
  document.getElementById("p2").src="slot1.png";
- else if(x3==2)
+ else if(s3==2)
  document.getElementById("p2").src="slot2.png";
  else
  document.getElementById("p2").src="slot3.png";
@@ -163,7 +163,7 @@ function run(){
    clearInterval(s);
    document.getElementById("button").disabled=false;
    document.getElementById("button1").disabled=true;
-   if(x1==x2&&x1==x3)
+   if(s1==s2&&s1==s3)
    {score+=10;
      document.getElementById("p1").innerHTML=score;
      document.getElementById('p5').innerHTML="YOU SCORED";
