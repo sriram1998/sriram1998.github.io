@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+ 
+<html>
+ <head>
+ <title>GUN GAME</title>
+ </head>
+ <style>
+ #res{position:absolute;
+    width: 10%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin-top:43%;
+    margin-left: 0.5%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#pas{position:absolute;
+  width: 10%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin-top:43%;
+    margin-left: 10%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+#resu{position:absolute;
+  width: 10%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin-top:43%;
+    margin-left: 20%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+}
+ </style>
+ <body> 
+<class id="res">
+ <button id="restart" onclick="res()">RESTART</button>
+ </class>
+ <class id="pas">
+ <button id="pause" onclick="pause()">PAUSE</button>
+ </class>
+ <class id="resu">
+ <button id="resume" onclick="resume()">RESUME</button>
+ </class>
+ 
+
+<canvas id="canvas" width="1000" height="550" style="background: url('war.jpg')"></canvas>
+
+<script>
+	document.getElementById("pause").disabled = false;
+  document.getElementById("restart").disabled = false;
+  document.getElementById("resume").disabled = true;
+	var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    var score=0;
+	var charx=10;
+	var chary=200;
+    var charht=10;
+    var charw=100;
+    var bulx=120;
+    var bulw=25;
+    var bulh=25;                                                                             
+    var a=0;
+    var b;
+    var check=0;
+    var tx=850;
+    var ty=250;
+    var t=0;
+    var am=0;
+    
+    ctx.fillStyle="black";
+  ctx.font="20px Arial";
+    ctx.fillText("PRESS W OR S TO START",10,30);
+    ctx.fillStyle="black";
+  
+    var gun=new Image();
+    gun.src="shotgun2.png";
+	var bullet=new Image();
+    bullet.src="bult.png";
+ 
+	  var tar = new Image(); 
+      tar.src = "targ.png";
+function tmove()
+{if(ty!=10&&t==0)
+	{ty--;
+     ctx.clearRect(tx,ty+1,150,200);
+	ctx.drawImage(tar,tx,ty,150,200);
+	}
+
+if(ty==10)
+{t=1;}
+	
+if(ty!=350&&t==1)
+{ty++;
+ctx.clearRect(tx,ty-1,150,200);
+ctx.drawImage(tar,tx,ty,150,200);
+	
+	}
+
+if(ty==350)
+	t=0;
+
+
+ }
+
+
+var ts=setInterval(tmove,15);
+ 
+
+
+
+
+
+
+
+
+ function scoreupdate()
+ { if(am<10)
+ 	{ctx.clearRect(0,0,400,30);
+ 	ctx.fillStyle="black";
+ 	ctx.font="20px Arial";
+    ctx.fillText("your score is: "+score,10,30);
+  ctx.fillStyle="black";
+  ctx.font="20px Arial";
+    ctx.fillText("AMMO: "+(10-am),170,30);}
+    else
+    {clearInterval(ts);
+    	ctx.clearRect(0,0,1000,600);
+ 	ctx.fillStyle="black";
+ 	ctx.font="20px Arial";
+    ctx.fillText("GAME OVER   FINAL SCORE: "+score,10,30);
+    }
+
+    
+   
+ }
+ 
+  function res()
+  { document.getElementById("restart").disabled = true;
+    ctx.clearRect(0,0,400,30);
+    clearInterval(ts);
+    ts=setInterval(tmove,15);
+    score=0;
+    am=0;
+    ctx.fillStyle="black";
+  ctx.font="20px Arial";
+    ctx.fillText("PRESS W OR S TO START",10,30);
+    document.getElementById("restart").disabled = false;
+    
+
+  }    
+
+  function pause()
+  {document.getElementById("pause").disabled = true;
+  document.getElementById("resume").disabled = false;
+    clearInterval(ts);
+  }
+  function resume()
+  {document.getElementById("pause").disabled = false;
+  document.getElementById("resume").disabled = true;
+    ts=setInterval(tmove,15);
+  }
+      
+   
+	
+  document.onkeydown=function(event)
+	{
+	if(event.keyCode==87)
+     if(check==0)
+	{ chary=chary-5;
+		ctx.clearRect(charx,chary+5,100,100);
+		ctx.drawImage(gun,charx,chary,100,100);
+     
+	}	
+	
+    if(event.keyCode==83)
+     if(check==0)
+	{ 
+		chary=chary+5;
+     ctx.clearRect(charx,chary-5,100,100);
+     ctx.drawImage(gun,charx,chary,100,100);
+	}
+	
+	if(event.keyCode==32)
+	{if(am>9)
+{
+      clearInterval(ts);
+      ctx.clearRect(0,0,1000,600);
+  ctx.fillStyle="black";
+  ctx.font="20px Arial";
+    ctx.fillText("GAME OVER   FINAL SCORE: "+score,10,30);
+    }
+    if(am<10)
+	{
+		am++;
+      function bulmove(){
+        if(bulx<900)
+      	{a=chary;
+      		check=1;
+      
+	  ctx.clearRect(bulx,a,bulw,bulh);
+	  
+      ctx.drawImage(bullet,bulx+10,a,bulw,bulh);
+     
+      bulx=bulx+10;
+      
+
+	}
+	else
+      if(bulx==900)
+      {if(a>ty&&a<ty+200)
+      	{   if(a>=ty&&a<=ty+30)
+      		score=score+50;
+      		if(a>ty+30&&a<=ty+100)
+      			score+=40;
+      		if(a>ty+100&&a<=ty+150)
+      			score+=30;
+      		if(a>ty+150&&a<ty+200)
+      			score+=20;
+      		scoreupdate();
+      		
+      	}
+        else
+        {
+          scoreupdate();
+        }
+      	ctx.clearRect(bulx,a,bulw,bulh);
+      	check=0;
+      	bulx=120;
+      	clearInterval(b);
+        }
+	}
+	b=setInterval(bulmove,15);
+	}
+  
+
+
+	
+        
+	}
+}
+
+
+</script>
+</body>
+</html>
